@@ -65,8 +65,8 @@ if __name__ == '__main__':
         model.eval()
         test_fn(cfg, model, test_loader, device)
     else:
-        model.load_state_dict(torch.load('E:\SFT4Caps\output\checkpoints/vatex\SFT_False_checkpoint_2025-06-09T18-19-56_Tloss_0.5_KLo_0.0_KLa_0.0_DLo_0.0_DLa_0.0\clip_b32_epochs_20_lr_0.0004_useonly_S_use_transformer_module_ham_True_max_objects_4.ckpt'),strict=False)
-        trainer = SFTTrainer(cfg, model, test_loader, test_loader, device)
+        # model.load_state_dict(torch.load('E:\SFT4Caps\output\checkpoints/vatex\SFT_False_checkpoint_2025-06-09T18-19-56_Tloss_0.5_KLo_0.0_KLa_0.0_DLo_0.0_DLa_0.0\clip_b32_epochs_20_lr_0.0004_useonly_S_use_transformer_module_ham_True_max_objects_4.ckpt'),strict=False)
+        trainer = SFTTrainer(cfg, model, train_loader, valid_loader, device)
         trainer.training()
         # model.load_state_dict(torch.load(
         #     'E:\SFT4Caps\output\checkpoints\msrvtt\SFT_True_checkpoint_2025-05-27T10-28-10_Tloss_0.5_KLo_0.0_KLa_0.0_DLo_0.0_DLa_0.0\clip_l14_epochs_20_lr_0.0002_use_transformer_module_ham_True_max_objects_4.ckpt'),strict=False)
