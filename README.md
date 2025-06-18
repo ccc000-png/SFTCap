@@ -130,13 +130,13 @@ You can download pretrained model and use them to evaluating the experiments by 
 - If you run the experiments on `MSRVTT`:
 ```
 # msrvtt
-python test.py --dataset msrvtt --track_objects 4 --clip_name clip_l14 --Track --Age --fusion_action --save_checkpoints [Pretrained model on MSRVTT]
+python test.py --clip_name clip_b32 --dataset msrvtt --init_method tcp://localhost:2223 --learning_rate 2e-4 --train_type sft --max_objects 4 --bsz 64 --save_checkpoints_every 100 --max_epochs 20 --max_caption_len 22 --T_loss 5 --lam_o 0 --lam_a 0 --Only_T_or_S S --use_ham --save_checkpoints [Pretrained model on MSRVTT]
 ```
 
 - If you run the experiments on `MSVD`:
 ```
 # msvd 
-python test.py --dataset msvd --track_objects 3 --clip_name clip_l14 --Track --Age --fusion_action --save_checkpoints [Pretrained model on MSVD]
+python test.py --clip_name clip_b32 --dataset msrvtt --init_method tcp://localhost:2223 --learning_rate 2e-4 --train_type sft --max_objects 3 --bsz 64 --save_checkpoints_every 100 --max_epochs 20 --max_caption_len 22 --T_loss 5 --lam_o 0 --lam_a 0 --Only_T_or_S S --use_ham --save_checkpoints [Pretrained model on MSRVTT]
 ```
 
 ### Training
@@ -145,5 +145,5 @@ You can use the following commands to run the experiments:
 - If you run the experiments on `MSRVTT`:
 ```
 # msrvtt
-python main.py --dataset msrvtt --track_objects 4 --clip_name clip_l14 --Track --Age --fusion_action
+python main.py --clip_name clip_b32 --dataset msrvtt --init_method tcp://localhost:2223 --learning_rate 2e-4 --train_type sft --max_objects 3 --bsz 64 --save_checkpoints_every 100 --max_epochs 20 --max_caption_len 22 --T_loss 5 --lam_o 0 --lam_a 0 --SFT --use_ham --use_module transformer
 ```
