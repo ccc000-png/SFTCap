@@ -1,12 +1,21 @@
-import json
-import logging
-
-import torch
 import pickle
 
 from configs.settings import TotalConfigs
 from eval import eval_fn
 from models.trainer.evaluate import eval_language_metrics
+import os
+
+import json
+
+import yaml
+import torch
+import logging
+
+from configs.settings import get_settings
+from models.build.build_loader import build_dataset
+from models.build.build_model import build_model
+
+from utils.sys_utils import set_random_seed, init_distributed
 
 logger = logging.getLogger(__name__)
 def test_fn(cfgs: TotalConfigs, model, loader, device):
@@ -43,3 +52,25 @@ def test_fn_clip(cfgs: TotalConfigs, model, loader, device):
     with open(cfgs.train.evaluate_dir, "a") as f:
         f.write(json.dumps(log_stats) + '\n')
     print('===================Testing is finished====================')
+
+if __name__ == '__main__':
+    cfg = get_settings()
+    # init_distributed(0, cfg)
+    yaml.dump(cfg, open(os.path.join(cfg.train.checkpoints_dir, 'config.yaml'), 'w'))
+    logging.basicConfig(level=getattr(logging, cfg.loglevel.upper()),
+                        format='%(asctime)s:%(levelname)s: %(message)s')
+    set_random_seed(cfg.seed)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    logger.info("Creating model")
+
+    model = build_model(config=cfg, pretrained='')
+    model = model.float()
+    model = model.to(device)
+
+    logger.info("Creating datasets")
+    train_loader, valid_loader, test_loader = build_dataset(cfg)
+
+    model.load_state_dict(torch.load(cfg.train.save_checkpoints_path),strict=False)
+    model.eval()
+    test_fn_clip(cfg, model, test_loader, device)
