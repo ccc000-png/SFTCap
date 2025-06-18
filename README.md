@@ -120,24 +120,6 @@ You can also download raw videos for feature processing from our shared links. P
 **Note:** 
 - The original names of MSVD videos do not follow the format `videoXXX`, It is recommended that you use the official name in the dataset directly. And you can follow [README_DATA.md](/preprocess/README.md) to process data.
 
-### Evaluating
-[Pretrained model on MSRVTT](https://1drv.ms/f/c/00263e242b1aba9a/EgpalW25KAlCtOV9UYuwOG4BUWoPTXmpT5qmJtq1LpIASg?e=fHGrQ9)
-
-[Pretrained model on MSVD](https://1drv.ms/f/c/00263e242b1aba9a/EmGfogi2r45CoemNXkYZuooBiIbqgP9TuVhI2jDUochjAg?e=1mxnDy)
-
-You can download pretrained model and use them to evaluating the experiments by using the following commands:
-
-- If you run the experiments on `MSRVTT`:
-```
-# msrvtt
-python test.py --clip_name clip_b32 --dataset msrvtt --init_method tcp://localhost:2223 --learning_rate 2e-4 --train_type sft --max_objects 4 --bsz 64 --save_checkpoints_every 100 --max_epochs 20 --max_caption_len 22 --T_loss 5 --lam_o 0 --lam_a 0 --Only_T_or_S S --use_ham --save_checkpoints [Pretrained model on MSRVTT]
-```
-
-- If you run the experiments on `MSVD`:
-```
-# msvd 
-python test.py --clip_name clip_b32 --dataset msrvtt --init_method tcp://localhost:2223 --learning_rate 2e-4 --train_type sft --max_objects 3 --bsz 64 --save_checkpoints_every 100 --max_epochs 20 --max_caption_len 22 --T_loss 5 --lam_o 0 --lam_a 0 --Only_T_or_S S --use_ham --save_checkpoints [Pretrained model on MSRVTT]
-```
 
 ### Training
 You can use the following commands to run the experiments:
